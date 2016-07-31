@@ -27,8 +27,8 @@ define('IMAGE_DIR', SITE_DIR . '/images/' . PROJECT . '/');
 define('DEVELOPMENT_MODE', true);
 
 
-define('DB_NAME', 'auto_db');
-define('DB_USER', 'root');
-define('DB_PASSWORD', '');
+define('DB_NAME', 'csv');
+define('DB_USER', 'csv');
+define('DB_PASSWORD', '74dk$^dus0');
 define('DB_HOST', 'localhost');
 

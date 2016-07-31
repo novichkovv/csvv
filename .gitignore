@@ -1,0 +1,4 @@
+.idea
+tmp
+/www/*.htaccess
+/www/config.php
