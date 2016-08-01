@@ -11,13 +11,23 @@ class upload_controller extends controller
     {
         if(isset($_FILES['file'])) {
             $file = $_FILES['file'];
-            if(array_pop(explode('.', $file['name'])) != 'csv') {
+            $arr = explode('.', $file['name']);
+            $ext = array_pop($arr);
+            if($ext != 'csv') {
                 $this->render('error', 'Wrong File Format');
             } else {
                 $rows = [];
                 $lines = file($file['tmp_name']);
                 if($lines) {
                     $this->model('data_table')->deleteAll();
+                    $dir = ROOT_DIR . 'html' . DS;
+                    $f = scandir($dir);
+                    foreach ($f as $file){
+                        if($file == '.' || $file == '..') {
+                            continue;
+                        }
+                        unlink($dir . $file);
+                    }
                     $date = date('Y-m-d H:i:s');
                     foreach ($lines as $k => $line) {
                         $fields = explode(',', $line);
@@ -40,6 +50,11 @@ class upload_controller extends controller
                         $row['description'] = $fields[4];
                         $row['datasheet'] = $fields[5];
                         $row['create_date'] = $date;
+                        $name = md5($row['qty'] . $row['part_number'] . rand() . time()) . '.html';
+                        $row['url'] = $name;
+                        $this->render('record', $row);
+                        $template = $this->fetch('page' . DS . 'index');
+                        file_put_contents(ROOT_DIR . 'html' . DS . $name, $template);
                         $rows[] = $row;
                         if(($k % 10000 == 0 || $k == count($lines) - 1) && $k != 0) {
                             $this->model('data_table')->insertRows($rows);

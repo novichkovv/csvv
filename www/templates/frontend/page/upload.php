@@ -8,13 +8,14 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-md-2">
+    <div class="col-md-4">
         <form action="" method="post" enctype="multipart/form-data" id="fileupload">
-                        <span class="btn btn-lg green fileinput-button">
+                        <span style="float: left" class="btn btn-lg green fileinput-button">
                             <i class="fa fa-upload"></i>
                             <span> Upload CSV </span>
                             <input id="file_input" type="file" name="file">
-                        </span>
+
+                        </span><img id="preloader" style="float: left; height: 45px; display: none;" src="<?php echo SITE_DIR; ?>images/preloader.GIF">
         </form>
     </div>
 
@@ -25,6 +26,8 @@
     $(document).ready(function () {
         $("#file_input").change(function() {
             $("#fileupload").submit();
+            $(".fileinput-button").attr('disabled', 'disabled')
+            $("#preloader").show();
         });
     });
 </script>

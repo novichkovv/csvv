@@ -106,6 +106,55 @@ abstract class controller extends base
             require_once(!$this->system_footer ? TEMPLATE_DIR . 'common' . DS . 'system_footer.php' : TEMPLATE_DIR . 'common' . DS .$this->system_footer . '.php');
         }
     }
+    
+    protected function view_fetch($template)
+    {
+        $this->render('log', registry::get('log'));
+        if(registry::get('common_vars')) {
+            $this->render('common_vars', registry::get('common_vars'));
+        }
+        $template_file = TEMPLATE_DIR . $template . '.php';
+        if(!file_exists($template_file)) {
+            throw new Exception('Can not find template ' . $template_file);
+        }
+        $this->render('scripts', $this->scripts);
+        $this->render('styles', $this->styles);
+        $this->render('append_to_body_elements', $this->append_to_body_elements);
+        foreach($this->vars as $k => $v) {
+            $$k = $v;
+        }
+        ob_start();
+        if($this->system_header !== false) {
+            @require(!$this->system_header ? TEMPLATE_DIR . 'common' . DS . 'system_header.php' : TEMPLATE_DIR . 'common' . DS . $this->system_header . '.php');
+        }
+
+        if($this->header !== false) {
+            @require(!$this->header ? TEMPLATE_DIR . 'common' . DS . 'header.php' : TEMPLATE_DIR . 'common' . DS .$this->header . '.php');
+        }
+//        if($this->sidebar !== false && PROJECT == 'backend') {
+//            @require(!$this->header ? TEMPLATE_DIR . 'common' . DS . 'sidebar.php' : TEMPLATE_DIR . 'common' . DS .$this->sidebar() . '.php');
+//        }
+        if($this->content !== false) {
+            @require(!$this->content ? TEMPLATE_DIR . 'common' . DS . 'content.php' : TEMPLATE_DIR . 'common' . DS .$this->content . '.php');
+        }
+
+        if($template_file !== false) {
+            $this->render('template', $template_file);
+        }
+
+        if($this->sidebar !== false) {
+            $this->render('sidebar', TEMPLATE_DIR . 'common' . DS . 'sidebar.php');
+//            @require(!$this->header ? TEMPLATE_DIR . 'common' . DS . 'sidebar.php' : TEMPLATE_DIR . 'common' . DS .$this->sidebar() . '.php');
+        }
+
+        if($this->footer !== false) {
+            @require(!$this->footer ? TEMPLATE_DIR . 'common' . DS . 'footer.php' : TEMPLATE_DIR . 'common' . DS .$this->footer . '.php');
+        }
+        if($this->system_footer !== false) {
+            @require(!$this->system_footer ? TEMPLATE_DIR . 'common' . DS . 'system_footer.php' : TEMPLATE_DIR . 'common' . DS .$this->system_footer . '.php');
+        }
+        return ob_get_clean();
+    }
 
     /**
      * @param string $template

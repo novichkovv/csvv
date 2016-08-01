@@ -55,12 +55,21 @@ class index_controller extends controller
                 break;
 
             case "edit_record":
+                $old = $this->model('data_table')->getById($_POST['record']['id']);
+                unlink(ROOT_DIR . 'html' . DS . $old['url']);
+                $this->render('record', $_POST['record']);
+                $template = $this->fetch('page' . DS . 'index');
+                $name = md5($_POST['record']['qty'] . $_POST['record']['part_number'] . rand() . time()) . '.html';
+                $_POST['record']['url'] = $name;
                 $this->model('data_table')->insert($_POST['record']);
+                file_put_contents(ROOT_DIR . 'html' . DS . $name, $template);
                 echo json_encode(array('status' => 1));
                 exit;
                 break;
 
             case "delete_record":
+                $old = $this->model('data_table')->getById($_POST['delete_id']);
+                unlink(ROOT_DIR . 'html' . DS . $old['url']);
                 if($_POST['delete_id']) {
                     $this->model('data_table')->deleteById($_POST['delete_id']);
                 }
@@ -82,7 +91,7 @@ class index_controller extends controller
                             <a data-toggle=\"modal\" href=\"#delete_modal\" class=\"btn btn-icon delete_btn btn-xs\" data-id=\"", id, "\">
                                 <i class=\"fa fa-trash text-danger\"></i>
                             </a>
-                            <a href=\"' . SITE_DIR . 'page/?id=", id, "\" class=\"btn btn-icon btn-xs\">
+                            <a href=\"' . SITE_DIR . 'html/", url, "\" class=\"btn btn-icon btn-xs\">
                                 <i class=\"fa fa-link\"></i>
                             </a>")'
         ];
