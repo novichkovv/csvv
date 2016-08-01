@@ -21,6 +21,9 @@ class upload_controller extends controller
                 if($lines) {
                     $this->model('data_table')->deleteAll();
                     $dir = ROOT_DIR . 'html' . DS;
+                    if(!file_exists($dir)) {
+                        mkdir($dir);
+                    }
                     $f = scandir($dir);
                     foreach ($f as $file){
                         if($file == '.' || $file == '..') {
