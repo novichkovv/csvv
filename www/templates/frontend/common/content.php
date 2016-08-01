@@ -1,6 +1,6 @@
 <div class="clearfix"> </div>
 <div class="page-container">
-<!--    --><?php //require_once(TEMPLATE_DIR . 'common' . DS . 'sidebar.php'); ?>
+    <?php require_once(TEMPLATE_DIR . 'common' . DS . 'sidebar.php'); ?>
     <!-- BEGIN CONTENT -->
     <div class="page-content-wrapper">
         <div class="page-content">

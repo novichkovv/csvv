@@ -238,6 +238,9 @@ function ajax_datatable(id, display_records, options)
                 if($(this).val())
                     params[$(this).attr('name')] = {"value" : $(this).val(), "sign" : $(this).attr('data-sign')};
             });
+            if($("#global_search").val()) {
+                params['global_search'] = {value: $("#global_search").val(), "sign": 'global'}
+            }
             aoData.push({"name" : "params", "value" : JSON.stringify(params)});
         },
         "oLanguage": {
@@ -278,6 +281,13 @@ function ajax_datatable(id, display_records, options)
         oTable.fnFilter();
     });
 
+    $("#global_search").keyup(function() {
+        var val = $(this).val();
+        if(val.length > 2) {
+            oTable.fnFilter();
+        }
+    });
+    
     $(".range-input-1, .range-input-2").datepicker({
         format: 'yyyy-mm-dd'
     });

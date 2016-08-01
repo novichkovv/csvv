@@ -26,13 +26,15 @@ class default_model extends model
 
                 if(isset($v['value']))
                 {
-                    if($v['sign'] != 'between' && $v['sign'] != 'like') {
+                    if($v['sign'] != 'between' && $v['sign'] != 'like' && $v['sign'] != 'global') {
                         $where[] = $k.' '.($v['sign'] ? $v['sign'].($v['value'] == 'NULL' || $v['noquotes'] ? ' '.$v['value'] : ' "'.$v['value'].'"') : '"'.$v.'"');
                     } elseif($v['sign'] == 'like') {
                         $where[] = $k.' LIKE  "%' . $v['value'] . '%"';
-                    } else {
+                    } elseif($v['sign'] == 'between') {
                         $v['value'] = explode(' - ',$v['value']);
                         $where[] = $k.' BETWEEN '.($v['noquotes']?'':'"').$v['value'][0].($v['noquotes']?'':'"').' AND '.($v['noquotes']?'':'"').$v['value'][1].($v['noquotes']?'':'"');
+                    } elseif($v['sign'] == 'global') {
+                        $where[] = 'qty LIKE "%' . $v['value'] . '%" OR part_number LIKE "%' . $v['value'] . '%" OR manufacturer LIKE "%' . $v['value'] . '%" OR product_line LIKE "%' . $v['value'] . '%" OR description LIKE "%' . $v['value'] . '%" OR datasheet LIKE "%' . $v['value'] . '%"';
                     }
                 }
                 else

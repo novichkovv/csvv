@@ -1,23 +1,5 @@
 <div class="row">
-    <div class="col-md-2">
-        <form action="" method="post" enctype="multipart/form-data" id="fileupload">
-                        <span class="btn btn-lg green fileinput-button">
-                            <i class="fa fa-upload"></i>
-                            <span> Upload CSV </span>
-                            <input id="file_input" type="file" name="file">
-                        </span>
-        </form>
-    </div>
-</div>
-<hr>
-<div class="row">
-
     <div class="col-md-12">
-        <?php if ($error): ?>
-            <div class="alert alert-danger">
-                <strong>Error!</strong> <?php echo $error; ?>
-            </div>
-        <?php endif; ?>
         <form method="post" id="filter-form">
             <div class="portlet light" style="border: 1px solid #ccc;">
                 <div class="portlet-title">
@@ -31,29 +13,39 @@
                     </div>
                 </div>
                 <div class="portlet-body custom-datatable">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="input-icon">
+                                    <i class="fa fa-search"></i>
+                                    <input type="text" class="form-control" id="global_search" placeholder="Search..">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <table class="table table-bordered" id="data_table">
                         <thead>
-                        <tr>
-                            <th>
-                                <input data-sign="=" type="text" class="form-control filter-field" name="qty" placeholder="Search..">
-                            </th>
-                            <th>
-                                <input data-sign="=" type="text" class="form-control filter-field" name="part_number" placeholder="Search..">
-                            </th>
-                            <th>
-                                <input data-sign="=" type="text" class="form-control filter-field" name="manufacturer" placeholder="Search..">
-                            </th>
-                            <th>
-                                <input data-sign="=" type="text" class="form-control filter-field" name="product_line" placeholder="Search..">
-                            </th>
-                            <th>
-                                <input data-sign="like" type="text" class="form-control filter-field" name="description" placeholder="Search..">
-                            </th>
-                            <th>
-                                <!--                            <input data-sign="=" type="text" class="form-control filter-field" name="datasheet" placeholder="Search..">-->
-                            </th>
-                            <th></th>
-                        </tr>
+<!--                        <tr>-->
+<!--                            <th>-->
+<!--                                <input data-sign="=" type="text" class="form-control filter-field" name="qty" placeholder="Search..">-->
+<!--                            </th>-->
+<!--                            <th>-->
+<!--                                <input data-sign="=" type="text" class="form-control filter-field" name="part_number" placeholder="Search..">-->
+<!--                            </th>-->
+<!--                            <th>-->
+<!--                                <input data-sign="=" type="text" class="form-control filter-field" name="manufacturer" placeholder="Search..">-->
+<!--                            </th>-->
+<!--                            <th>-->
+<!--                                <input data-sign="=" type="text" class="form-control filter-field" name="product_line" placeholder="Search..">-->
+<!--                            </th>-->
+<!--                            <th>-->
+<!--                                <input data-sign="like" type="text" class="form-control filter-field" name="description" placeholder="Search..">-->
+<!--                            </th>-->
+<!--                            <th>-->
+<!--                                <!--                            <input data-sign="=" type="text" class="form-control filter-field" name="datasheet" placeholder="Search..">-->
+<!--                            </th>-->
+<!--                            <th></th>-->
+<!--                        </tr>-->
                         <tr>
                             <th>QTY</th>
                             <th>Part Number</th>
@@ -127,9 +119,6 @@
 <script type="text/javascript">
     $ = jQuery.noConflict();
     $(document).ready(function () {
-        $("#file_input").change(function() {
-            $("#fileupload").submit();
-        });
         ajax_datatable('data_table');
         $("body").on("click", ".edit_btn", function () {
             var id = $(this).attr('data-id');
@@ -219,22 +208,3 @@
         });
     });
 </script>
-<style>
-    #file_input {
-        position: absolute;
-        top: 0;
-        right: 0;
-        margin: 0;
-        opacity: 0;
-        -ms-filter: 'alpha(opacity=0)';
-        font-size: 200px;
-        direction: ltr;
-        cursor: pointer;
-    }
-    .DTTT {
-        display: none;
-    }
-    #data_table_filter {
-        display: none;
-    }
-</style>
