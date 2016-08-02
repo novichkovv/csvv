@@ -65,11 +65,23 @@ class tools_class
     public static function readXLS($file)
     {
         require_once LIBS_DIR . 'PHPExcel' . DS . 'PHPExcel.php';
-        $pExcel = PHPExcel_IOFactory::load($file);
-        $tables = [];
-        foreach ($pExcel->getWorksheetIterator() as $worksheet) {
-            $tables[] = $worksheet->toArray();
-        }
-        return $tables;
+        $xls = PHPExcel_IOFactory::load($file);
+        $xls->setActiveSheetIndex(0);
+        $sheet = $xls->getActiveSheet();
+        $rowIterator = $sheet->getRowIterator();
+//        foreach ($rowIterator as $k => $row) {
+//            $cellIterator = $row->getCellIterator();
+//            foreach ($cellIterator as $cell) {
+//                var_dump($cell);
+//            }
+//            if($k == 5) {
+//                exit;
+//            }
+//        }
+//        $tables = [];
+//        foreach ($pExcel->getWorksheetIterator() as $worksheet) {
+//            $tables[] = $worksheet->toArray();
+//        }
+        return $sheet;
     }
 }

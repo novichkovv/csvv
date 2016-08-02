@@ -31,7 +31,7 @@
 <div class="form-group">
     <label class="control-label col-md-4">Datasheet</label>
     <div class="col-md-6">
-        <input type="text" class="form-control" value="<?php echo $record['datasheet']; ?>" name="record[datasheet]">
+        <textarea rows="5" class="form-control" name="record[datasheet]"><?php echo htmlentities($record['datasheet']); ?></textarea>
     </div>
 </div>
 <input type="hidden" name="record[id]" value="<?php echo $record['id']; ?>">
