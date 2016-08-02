@@ -33,8 +33,6 @@ class upload_controller extends controller
                         $cellIterator = $row->getCellIterator();
                         $fields = [];
                         foreach ($cellIterator as $cell_number => $cell) {
-//                            echo $cell_number;
-//                            echo $cell->getValue();
                             if($cell_number == 6 && $cell->hasHyperlink()) {
                                 $url = $cell->getHyperlink()->getUrl();
                                 if($pos = strpos($url, '.pdf')) {
@@ -58,12 +56,8 @@ class upload_controller extends controller
                         $row['description'] = $fields[5];
                         $row['datasheet'] = $fields[6];
                         $row['create_date'] = $date;
-                        $name = md5($row['qty'] . $row['part_number'] . rand() . time()) . '.html';
+                        $name = urlencode($row['part_number']) . '.html';
                         $row['url'] = $name;
-//                        print_r($row);
-//                        if($row_number == 5) {
-//                            exit;
-//                        }
                         $this->render('record', $row);
                         $template = $this->fetch('page' . DS . 'index');
                         file_put_contents(ROOT_DIR . 'html' . DS . $name, $template);
