@@ -28,7 +28,11 @@ class results_controller extends controller
         $params = [];
         $params['table'] = 'data_table';
         $params['select'] = [
-            'qty', 'part_number', 'manufacturer', 'product_line', 'description', 'datasheet'
+            'qty', 'part_number', 'manufacturer', 'product_line', 'description', 'datasheet',
+            'CONCAT("
+                <a href=\"' . SITE_DIR . 'html/", url, "\" class=\"btn btn-icon btn-xs\">
+                    <i class=\"fa fa-link\"></i>
+                </a>")'
         ];
         return $params;
     }

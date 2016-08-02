@@ -36,6 +36,7 @@
                                                     <th>Product Line</th>
                                                     <th>Description</th>
                                                     <th>Datasheet</th>
+                                                    <th>Link</th>
                                                 </tr>
                                                 </thead>
                                             </table>
