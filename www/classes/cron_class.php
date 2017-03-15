@@ -15,8 +15,8 @@ class cron_class extends base
             if(isset($latest["" . $item->guid])) {
                 continue;
             }
-            if(preg_match("/Budget<\/b>:\s*.{1}([0-9]+)/", $item->description, $matches)) {
-                if($matches[1] >= 300) {
+            if(preg_match("/Budget<\/b>:\s*.{1}([0-9,]+)/", $item->description, $matches)) {
+                if(str_replace(',','', $matches[1]) >= 300) {
                     $reg_exp = "/(wp|wordpress|drupal|laravel|yii|zend|magento|opencart|woo|woocommerce|codeigniter|joomla|pakistan)/i";
                     if(!preg_match($reg_exp, $item->title)) {
                         if(!preg_match($reg_exp, $item->description)) {
